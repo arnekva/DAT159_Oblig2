@@ -47,7 +47,8 @@ public class TCPClientSSLRSA {
 			// implement me
 			String algorithm = DigitalSignature.SIGNATURE_SHA256WithRSA;
 			PrivateKey privateKey = getPrivateKey();
-			byte[] signature = DigitalSignature.sign(msg, privateKey, algorithm);
+			String message = msg.replace("%20", " ");
+			byte[] signature = DigitalSignature.sign(message, privateKey, algorithm);
 			String signatureinhex = DigitalSignature.getHexValue(signature);
 			
 			msg = msg + "-"+signatureinhex;			// format message as: Message-Signature

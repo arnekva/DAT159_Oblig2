@@ -46,7 +46,8 @@ public class HttpsClientProxyRSA {
 			// implement me alrighty
 			String algorithm = DigitalSignature.SIGNATURE_SHA256WithRSA;
 			PrivateKey privateKey = getPrivateKey();
-			byte[] signature = DigitalSignature.sign(message, privateKey, algorithm);
+			String msg = message.replace("%20", " ");
+			byte[] signature = DigitalSignature.sign(msg, privateKey, algorithm);
 			String signatureinhex = DigitalSignature.getHexValue(signature);
 						
 			message = message + "-"+signatureinhex;			// format message as: Message-Signature
