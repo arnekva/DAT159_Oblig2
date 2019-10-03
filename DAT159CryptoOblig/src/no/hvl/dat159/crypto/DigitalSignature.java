@@ -27,7 +27,7 @@ public class DigitalSignature {
 		// implement me
 		Signature signature = Signature.getInstance(algorithm);
 		signature.initSign(privateKey);
-		signature.update(getEncodedBinary(message));
+		signature.update(message.getBytes());
 		return signature.sign();
 	}
 	

@@ -15,6 +15,7 @@ import java.security.UnrecoverableKeyException;
 import javax.crypto.NoSuchPaddingException;
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocketFactory;
+import javax.xml.bind.DatatypeConverter;
 
 import no.hvl.dat159.config.ServerConfig;
 import no.hvl.dat159.crypto.DigitalSignature;
@@ -47,8 +48,7 @@ public class TCPClientSSLRSA {
 			// implement me
 			String algorithm = DigitalSignature.SIGNATURE_SHA256WithRSA;
 			PrivateKey privateKey = getPrivateKey();
-			String message = msg.replace("%20", " ");
-			byte[] signature = DigitalSignature.sign(message, privateKey, algorithm);
+			byte[] signature = DigitalSignature.sign(msg, privateKey, algorithm);
 			String signatureinhex = DigitalSignature.getHexValue(signature);
 			
 			msg = msg + "-"+signatureinhex;			// format message as: Message-Signature
