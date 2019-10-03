@@ -106,7 +106,8 @@ public class TCPServerSSLRSA {
 	
 	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException {
 		// set the keystore dynamically using the system property
-		
+		System.setProperty("javax.net.ssl.keyStore", "mykeys/tcp_keystore");
+		System.setProperty("javax.net.ssl.keyStorePassword", "password");
 		// implement me
 		
 		TCPServerSSLRSA tcpserver = new TCPServerSSLRSA(ServerConfig.PORT);
