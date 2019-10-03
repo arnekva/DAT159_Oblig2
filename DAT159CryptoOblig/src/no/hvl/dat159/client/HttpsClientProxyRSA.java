@@ -40,6 +40,7 @@ public class HttpsClientProxyRSA {
 			// sign the message and append the signature to the message to the server
 			
 			// implement me
+			// but i dont know how
 			String signatureinhex = "";
 						
 			message = message + "-"+signatureinhex;			// format message as: Message-Signature
