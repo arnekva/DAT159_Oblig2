@@ -8,6 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
 import java.security.SignatureException;
 
 import javax.xml.bind.DatatypeConverter;
@@ -24,16 +25,19 @@ public class DigitalSignature {
 	public static byte[] sign(String message, PrivateKey privateKey, String algorithm) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, SignatureException {
 		
 		// implement me
-		
-		return null;
-		
+		Signature signature = Signature.getInstance(algorithm);
+		signature.initSign(privateKey);
+		signature.update(getEncodedBinary(message));
+		return signature.sign();
 	}
 	
 	public static boolean verify(String message, byte[] digitalSignature, PublicKey publickey, String algorithm) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, SignatureException {
 		
 		// implement me
-		
-		return false;
+		Signature signature = Signature.getInstance(algorithm);
+		signature.initVerify(publickey);
+		signature.update(message.getBytes());
+		return signature.verify(digitalSignature);
 	}
 	
 	public static String getHexValue(byte[] signature) {

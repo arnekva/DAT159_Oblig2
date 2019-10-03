@@ -41,7 +41,7 @@ public class TCPServerSSLRSA {
 		}
 	}
 	
-	public void socketlistener() throws NoSuchAlgorithmException, NoSuchPaddingException {
+	public void socketlistener() throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, SignatureException {
 		
 		try {
 			
@@ -77,7 +77,7 @@ public class TCPServerSSLRSA {
 		}
 	}
 	
-	private boolean checkMessageForValidity(String messageandsignature, PublicKey publickey) {
+	private boolean checkMessageForValidity(String messageandsignature, PublicKey publickey) throws InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException, SignatureException {
 		
 		if(messageandsignature.startsWith("GET /")) {
 			messageandsignature = messageandsignature.replace("GET /", "");
@@ -89,9 +89,10 @@ public class TCPServerSSLRSA {
 		String[] tokens = messageandsignature.trim().split("-");
 		String message = tokens[0].replace("%20", " ");
 		String signatureinhex = tokens[1];
+		byte[] digitalSignature = DigitalSignature.getEncodedBinary(signatureinhex);
 		
-		// implement me - verify signature and send the result
-		
+		// implement me - verify signature and send the result sure
+		isValid = DigitalSignature.verify(message, digitalSignature, publickey, DigitalSignature.SIGNATURE_SHA256WithRSA);
 		return isValid;
 		
 	}
@@ -104,7 +105,7 @@ public class TCPServerSSLRSA {
 		return Certificates.getPublicKey(certpath);
 	}
 	
-	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException {
+	public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, SignatureException {
 		// set the keystore dynamically using the system property
 		System.setProperty("javax.net.ssl.keyStore", "mykeys/tcp_keystore");
 		System.setProperty("javax.net.ssl.keyStorePassword", "password");
