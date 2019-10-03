@@ -3,7 +3,12 @@
  */
 package no.hvl.dat159.crypto;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.security.PublicKey;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
 /**
  * @author tdoy
@@ -23,9 +28,18 @@ public class Certificates {
 	public static PublicKey getPublicKey(String certfile) {
 		
 		
-		// implement me
-		
-		return null;
+		// implement me okidoki
+		X509Certificate certificate = null;
+		try {
+			FileInputStream fin = new FileInputStream(certfile);
+			CertificateFactory f = CertificateFactory.getInstance("X.509");
+			certificate = (X509Certificate)f.generateCertificate(fin);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (CertificateException e) {
+			e.printStackTrace();
+		}
+		return certificate.getPublicKey();
 	}
 
 }

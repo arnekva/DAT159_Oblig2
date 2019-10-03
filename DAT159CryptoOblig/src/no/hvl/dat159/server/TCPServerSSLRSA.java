@@ -99,7 +99,7 @@ public class TCPServerSSLRSA {
 	
 	private PublicKey getPublicKey() throws NoSuchAlgorithmException, NoSuchPaddingException {
 		
-		String certpath = "specify certificate path here";		// extract public key from the certificate file
+		String certpath = "mykeys/tcpexample.cer";		// extract public key from the certificate file
 		
 		return Certificates.getPublicKey(certpath);
 	}
